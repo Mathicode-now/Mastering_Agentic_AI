@@ -101,6 +101,13 @@ Opens at `http://localhost:8501` with 6 tabs:
 - **📉 Gap Analysis** — Weighted rankings, improvement recommendations
 - **📖 About & README** — Project overview with this README rendered in-app
 
+### Streamlit Cloud Deployment
+
+The dashboard is also hosted on Streamlit Community Cloud. Two things to know if you're running/deploying locally:
+
+- **`requirements.txt`** (repo root) is what Streamlit Cloud actually installs from — it takes precedence over `pyproject.toml`/Poetry there. If you add a new dashboard dependency, update both `requirements.txt` and the `dashboard` extra in `pyproject.toml`, or the cloud app will break with a `ModuleNotFoundError` even though it works locally.
+- **`results.db` is committed to the repo** (whitelisted in `.gitignore` despite the `*.db` rule) because the cloud app reads it directly and there's no other sync mechanism. After running new evals locally, `git add results.db && git commit && git push` to refresh the cloud dashboard — otherwise it keeps showing stale/old data.
+
 ### Direct DB Access
 
 Results are stored in `results.db` (SQLite). Query directly:
