@@ -131,8 +131,8 @@ class EvalRunner:
             model_ids = [m["id"] for m in self.models_config["models"]]
 
         if run_name is None:
-            timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-            run_name = f"{field}_{timestamp}"
+            timestamp = datetime.now(UTC).strftime("%Y%m%d-%H%M")
+            run_name = f"{field}-{timestamp}"
 
         run_id = self.store.create_run(
             run_name=run_name,

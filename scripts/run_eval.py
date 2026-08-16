@@ -125,7 +125,7 @@ examples:
         default=None,
         metavar="NAME",
         help="Custom name for this evaluation run. "
-        "Defaults to 'eval_YYYYMMDD_HHMMSS'.",
+        "Defaults to '<field>-YYYYMMDD-HHMM', auto-generated per field.",
     )
     parser.add_argument(
         "--db",
@@ -196,11 +196,10 @@ def main(argv: list[str] | None = None) -> int:
             )
         return 0
 
-    # Generate default run name if not provided
-    run_name = args.run_name
-    if run_name is None:
-        timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-        run_name = f"eval_{timestamp}"
+    # Shared timestamp for this invocation; each field gets its own short,
+    # meaningful default name (e.g. "classification-20260816-0801") unless
+    # the caller supplied --run-name explicitly.
+    timestamp = datetime.now(UTC).strftime("%Y%m%d-%H%M")
 
     # Validate field if specified
     if args.field:
@@ -227,8 +226,10 @@ def main(argv: list[str] | None = None) -> int:
 
     # Run evaluation
     run_ids: list[int] = []
+    run_names: dict[int, str] = {}
     try:
         if args.field:
+            run_name = args.run_name or f"{args.field}-{timestamp}"
             print(f"Starting evaluation: field={args.field}, run_name={run_name}")
             print(f"Models: {args.models or 'all configured'}\n")
             run_id = runner.run_field(
@@ -237,24 +238,34 @@ def main(argv: list[str] | None = None) -> int:
                 run_name=run_name,
             )
             run_ids.append(run_id)
+            run_names[run_id] = run_name
         else:
-            print(f"Starting full evaluation: run_name={run_name}")
-            print(f"Models: {args.models or 'all configured'}\n")
-            # run_all_fields doesn't accept run_name, so run each field individually
             fields = list_fields()
             if not fields:
                 print("Error: No task fields found in tasks/")
                 return 1
+            if args.run_name:
+                print(f"Starting full evaluation: run_name={args.run_name}")
+            else:
+                print(
+                    "Starting full evaluation across "
+                    f"{len(fields)} fields (auto-named per field, e.g. "
+                    f"'{fields[0]}-{timestamp}')"
+                )
+            print(f"Models: {args.models or 'all configured'}\n")
+            # run_all_fields doesn't accept run_name, so run each field individually
             for field in fields:
                 print(f"\n{'='*60}")
                 print(f"  Field: {field}")
                 print(f"{'='*60}\n")
+                run_name = args.run_name or f"{field}-{timestamp}"
                 run_id = runner.run_field(
                     field=field,
                     model_ids=args.models,
                     run_name=run_name,
                 )
                 run_ids.append(run_id)
+                run_names[run_id] = run_name
 
     except KeyboardInterrupt:
         print("\n\nInterrupted! Printing partial results...\n")
@@ -263,7 +274,7 @@ def main(argv: list[str] | None = None) -> int:
             if results:
                 # Determine field from results
                 field_name = results[0]["task_field"] if results else "unknown"
-                print_summary_table(results, run_name, field_name)
+                print_summary_table(results, run_names[rid], field_name)
         return 1
     except (OSError, RuntimeError, ValueError) as e:
         print(f"\nError during evaluation: {e}")
@@ -272,7 +283,7 @@ def main(argv: list[str] | None = None) -> int:
             results = runner.get_results_table(rid)
             if results:
                 field_name = results[0]["task_field"] if results else "unknown"
-                print_summary_table(results, run_name, field_name)
+                print_summary_table(results, run_names[rid], field_name)
         return 1
 
     # Print summary tables for all completed runs
@@ -280,7 +291,7 @@ def main(argv: list[str] | None = None) -> int:
         results = runner.get_results_table(rid)
         if results:
             field_name = results[0]["task_field"] if results else "unknown"
-            print_summary_table(results, run_name, field_name)
+            print_summary_table(results, run_names[rid], field_name)
 
     print("Evaluation complete.")
     return 0
