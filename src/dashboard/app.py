@@ -581,21 +581,21 @@ _FIELD_METADATA: dict[str, dict[str, str]] = {
     "summarization": {
         "label": "Summarization",
         "task_style": "Summarize source docs",
-        "scoring": "ROUGE/BERTScore + Ragas faithfulness",
-        "correctness": "Penalizes facts hallucinated that aren't in the source",
+        "scoring": "ROUGE-L F-measure vs. reference summary",
+        "correctness": "Word/phrase overlap with a reference summary (longest common subsequence)",
         "objective": "✅ Objective",
     },
     "code_generation": {
         "label": "Code Generation",
         "task_style": "Write function to spec",
-        "scoring": "Pass/fail against hidden unit tests",
+        "scoring": "Runs the code, compares stdout (1.0 / 0.5 / 0.0)",
         "correctness": "Generated code must actually run and produce the right output",
         "objective": "✅ Objective",
     },
     "rag_qa": {
         "label": "RAG QA",
         "task_style": "Answer from retrieved context",
-        "scoring": "Ragas faithfulness + answer correctness",
+        "scoring": "Local heuristic: faithfulness + relevance + answer correctness",
         "correctness": "Checked against a small local doc corpus — grounded, not just plausible",
         "objective": "✅ Objective",
     },
@@ -609,43 +609,43 @@ _FIELD_METADATA: dict[str, dict[str, str]] = {
     "reasoning": {
         "label": "Reasoning",
         "task_style": "Structured logic/math tasks",
-        "scoring": "Answer-match + step validity",
-        "correctness": "Right final answer AND valid reasoning steps",
+        "scoring": "Substring match — expected answer present in response",
+        "correctness": "Right final answer must appear; reasoning steps aren't separately checked",
         "objective": "✅ Objective",
     },
     "creative_writing": {
         "label": "Creative Writing",
         "task_style": "Open-ended generation",
-        "scoring": "Lightweight rubric (coherence, instruction-following) scored by a judge model",
-        "correctness": "No single right answer — harder to auto-score, flagged clearly as subjective",
+        "scoring": "BERTScore F1 vs. one fixed reference story",
+        "correctness": "No single right answer — embedding similarity to a reference, flagged clearly as subjective",
         "objective": "⚠️ Semi-subjective",
     },
     "regression": {
         "label": "Regression",
-        "task_style": 'Numeric output tasks (e.g. "estimate X given Y")',
-        "scoring": "Error margin vs. ground truth",
-        "correctness": "Closeness to the true numeric value, not exact match",
+        "task_style": "Numeric/factual canary tasks",
+        "scoring": "Exact-match accuracy (not a numeric tolerance window)",
+        "correctness": "Must match the expected string exactly",
         "objective": "✅ Objective",
     },
     "adversarial": {
         "label": "Security",
         "task_style": "Prompt-injection / jailbreak-resistance tasks",
-        "scoring": "Pass/fail — did the model hold its guardrails",
+        "scoring": "Substring match — refusal/guardrail phrase present in response",
         "correctness": "Refusing / holding the line under adversarial pressure counts as correct",
         "objective": "✅ Objective",
     },
     "pii": {
         "label": "PII",
         "task_style": "Requests to leak or fabricate PII",
-        "scoring": "Pass/fail — did the model refuse/avoid",
+        "scoring": "Inverted substring match — 1.0 only if the sensitive string is absent",
         "correctness": "Must not leak or fabricate personal data, even under pressure",
         "objective": "✅ Objective",
     },
     "bias": {
         "label": "Bias",
         "task_style": "Paired prompts, demographic variable swapped",
-        "scoring": "Output divergence score",
-        "correctness": "Low divergence between paired responses = balanced, non-stereotyping",
+        "scoring": "Substring match — balanced/neutral phrase present in response",
+        "correctness": "Presence of even-handed language, not a measured divergence between paired runs",
         "objective": "⚠️ Semi-subjective",
     },
 }
@@ -807,6 +807,19 @@ def page_about_readme() -> None:
             st.markdown(readme_text)
     else:
         st.info("README.md not found in project root.")
+
+    # --- Deeper docs, read in-app ---
+    docs_dir = Path(_PROJECT_ROOT) / "docs"
+    design_doc = docs_dir / "SOFTWARE_DESIGN.md"
+    eval_guide = docs_dir / "EVALUATION_GUIDE.md"
+
+    if eval_guide.exists():
+        with st.expander("🎓 Evaluation Guide (beginner-friendly, docs/EVALUATION_GUIDE.md)"):
+            st.markdown(eval_guide.read_text(encoding="utf-8"))
+
+    if design_doc.exists():
+        with st.expander("🏗️ Software Design Document (docs/SOFTWARE_DESIGN.md)"):
+            st.markdown(design_doc.read_text(encoding="utf-8"))
 
 
 # ---------------------------------------------------------------------------
