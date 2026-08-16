@@ -2,8 +2,10 @@ __pycache__/
 *.pyc
 .venv/
 *.db
+!results.db
 build/
 dist/
 *.egg-info/
 .ruff_cache/
 .mypy_cache/
+.pyproject.toml/
