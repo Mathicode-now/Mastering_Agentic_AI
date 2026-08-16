@@ -1,4 +1,4 @@
-# Model Eval Framework
+# ModelFit.0
 
 Local LLM evaluation framework for comparing small models (7B–9B) across 10 task types using Ollama.
 
@@ -33,7 +33,8 @@ python3 scripts/run_eval.py --field classification
 # Run specific models only
 python3 scripts/run_eval.py --field code_generation --models qwen2.5-coder:7b mistral:7b
 
-# Custom run name (defaults to eval_YYYYMMDD_HHMMSS)
+# Custom run name (defaults to a short, meaningful "<field>-YYYYMMDD-HHMM",
+# auto-generated per field — e.g. "classification-20260816-0801")
 python3 scripts/run_eval.py --run-name "baseline-v1"
 
 # See available fields and models
@@ -41,20 +42,28 @@ python3 scripts/run_eval.py --list-fields
 python3 scripts/run_eval.py --list-models
 ```
 
-### Evaluation Fields
+### Golden-Case Matrix
 
-| Field | Tasks | Scoring | What it tests |
-|-------|-------|---------|---------------|
-| `Code_generation` | 5 | Code execution | Runs generated code, compares output |
-| `Classification` | 5 | Exact match | Sentiment analysis accuracy |
-| `Reasoning` | 5 | Contains | Logic, math, deduction |
-| `Summarization` | 5 | ROUGE-L | Summary quality vs reference |
-| `Rag_qa` | 5 | RAG composite | Faithfulness + relevance + correctness |
-| `Creative_writing` | 5 | BERT-Score | Semantic quality vs reference |
-| `Adversarial` | 5 | Contains | Safety — must refuse harmful requests |
-| `Pii` | 5 | Not-contains | Must NOT leak given PII |
-| `Bias` | 5 | Contains | Balanced, non-stereotyping responses |
-| `Regression` | 5 | Exact match | Canary tests for consistency |
+Every evaluation produces one row per `(model, field, use_case, task_id)` —
+stored in `results.db` as `(model_id, task_field, prompt, task_id)`. "Correctness"
+is defined differently per field, so scores are **not directly comparable across
+fields** — a 0.8 in `classification` (exact-match) and a 0.8 in `creative_writing`
+(judge-scored rubric) mean very different things. This table is the source of
+truth for how each field is graded; it's also rendered live on the dashboard's
+**About & README** tab and referenced in **Overview → Strengths & Weaknesses**.
+
+| Field | Task Style / Use Case | Scored By | What "Correctness" Means | Objectivity |
+|-------|------------------------|-----------|---------------------------|-------------|
+| `summarization` | Summarize source docs | ROUGE/BERTScore + Ragas faithfulness | Penalizes facts hallucinated that aren't in the source | ✅ Objective |
+| `code_generation` | Write function to spec | Pass/fail against hidden unit tests | Generated code must actually run and produce the right output | ✅ Objective |
+| `rag_qa` | Answer from retrieved context | Ragas faithfulness + answer correctness | Checked against a small local doc corpus — grounded, not just plausible | ✅ Objective |
+| `classification` | Label assignment | Exact-match accuracy | Must match the labeled set exactly | ✅ Objective |
+| `reasoning` | Structured logic/math tasks | Answer-match + step validity | Right final answer AND valid reasoning steps | ✅ Objective |
+| `creative_writing` | Open-ended generation | Lightweight rubric (coherence, instruction-following) scored by a judge model | No single right answer — harder to auto-score, flagged clearly as subjective | ⚠️ Semi-subjective |
+| `regression` | Numeric output tasks (e.g. "estimate X given Y") | Error margin vs. ground truth | Closeness to the true numeric value, not exact match | ✅ Objective |
+| `adversarial` (shown as **Security** in the UI) | Prompt-injection / jailbreak-resistance tasks | Pass/fail — did the model hold its guardrails | Refusing / holding the line under adversarial pressure counts as correct | ✅ Objective |
+| `pii` | Requests to leak or fabricate PII | Pass/fail — did the model refuse/avoid | Must not leak or fabricate personal data, even under pressure | ✅ Objective |
+| `bias` | Paired prompts, demographic variable swapped | Output divergence score | Low divergence between paired responses = balanced, non-stereotyping | ⚠️ Semi-subjective |
 
 ## Viewing Results
 
@@ -64,7 +73,7 @@ After each run, a summary table prints automatically:
 
 ```
 ═══════════════════════════════════════════════════════════
-Run: eval_20260815_210000 | Field: classification
+Run: classification-20260815-2100 | Field: classification
 ═══════════════════════════════════════════════════════════
 Model               Avg Score   Avg Latency   Tasks
 ───────────────────────────────────────────────────────────
@@ -79,13 +88,14 @@ Mistral             0.60        987ms         5
 streamlit run src/dashboard/app.py
 ```
 
-Opens at `http://localhost:8501` with 5 pages:
+Opens at `http://localhost:8501` with 6 tabs:
 
-- **Overview** — Select a run, see heatmap + model comparison bars
-- **Browse by Field** — Pick a field from dropdown, see all results across runs (no run selection needed)
-- **Field Detail** — Drill into a specific run + field, per-task breakdown
-- **Model Comparison** — Radar charts, token efficiency, side-by-side metrics
-- **Gap Analysis** — Weighted rankings, improvement recommendations
+- **🏠 Overview** — Leaderboard, KPI cards, cross-field heatmap, evaluation coverage
+- **🔍 Browse by Task Style** — Pick a task style from the dropdown, see all results across runs (no run selection needed)
+- **📋 Field Detail** — Drill into a specific run + field, per-task breakdown
+- **⚖️ Model Comparison** — Radar charts, token efficiency, side-by-side metrics
+- **📉 Gap Analysis** — Weighted rankings, improvement recommendations
+- **📖 About & README** — Project overview with this README rendered in-app
 
 ### Direct DB Access
 
