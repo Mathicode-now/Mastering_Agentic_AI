@@ -40,3 +40,10 @@ testpaths = ["tests"]
 markers = [
     "milestone: Phase milestone verification tests",
 ]
+
+[tool.poetry]
+name = "model-eval-framework"
+version = "0.1.0"
+description = ""
+authors = ["Mathi <vathanathiagarajan@gmail.com>"]
+package-mode = false  # app, not a publishable package — skip Poetry's install step
