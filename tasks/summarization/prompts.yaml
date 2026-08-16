@@ -1,0 +1,98 @@
+field: summarization
+scoring: rouge
+tasks:
+  - id: sum_001
+    description: Summarize a news article about climate policy
+    prompt: |
+      Summarize the following text in 2-3 sentences:
+
+      The United Nations Climate Change Conference concluded yesterday with 195 nations
+      agreeing to a landmark framework for reducing greenhouse gas emissions by 45% before
+      2035. The agreement includes a $100 billion annual fund to assist developing nations
+      in transitioning to renewable energy sources. Critics argue the targets lack
+      enforcement mechanisms, while supporters call it the most ambitious climate accord
+      in history. Several major oil-producing nations initially resisted the terms but
+      ultimately signed after concessions on timeline flexibility were introduced.
+    expected_output: |
+      The UN Climate Change Conference ended with 195 nations committing to cut greenhouse gas emissions by 45% before 2035, backed by a $100 billion annual fund for developing nations' renewable energy transitions. While critics note the lack of enforcement mechanisms, supporters consider it historically ambitious, with oil-producing nations joining after receiving timeline concessions.
+    difficulty: easy
+
+  - id: sum_002
+    description: Summarize a technical paper abstract about machine learning
+    prompt: |
+      Summarize the following text in 2-3 sentences:
+
+      We present a novel transformer architecture that achieves state-of-the-art performance
+      on long-document understanding tasks by introducing a hierarchical attention mechanism.
+      Unlike standard self-attention which scales quadratically with sequence length, our
+      approach first segments documents into overlapping chunks, applies local attention within
+      each chunk, and then uses a global attention layer to capture cross-chunk dependencies.
+      Experiments on five benchmark datasets show our model reduces memory consumption by 60%
+      while improving F1 scores by 3.2 points on average compared to existing long-context
+      models. The architecture is particularly effective on documents exceeding 16,000 tokens
+      where traditional transformers either truncate input or suffer from degraded attention quality.
+    expected_output: |
+      The paper introduces a hierarchical attention transformer that processes long documents by combining local chunk-level attention with a global cross-chunk attention layer, reducing the quadratic scaling problem of standard self-attention. This approach cuts memory usage by 60% while improving F1 scores by 3.2 points across five benchmarks, particularly excelling on documents over 16,000 tokens.
+    difficulty: medium
+
+  - id: sum_003
+    description: Summarize meeting notes
+    prompt: |
+      Summarize the following text in 2-3 sentences:
+
+      Meeting Notes - Q3 Planning Session, August 5th
+      Attendees: Engineering, Product, Design teams (14 people)
+      
+      Discussion Points:
+      - The migration from monolith to microservices is 60% complete. Auth service and
+        payment service are live. Order service migration blocked by legacy database schema.
+      - Product wants to launch the new recommendation engine by September 15th, but
+        engineering estimates 6 weeks of work remaining due to ML model retraining pipeline.
+      - Design presented new mobile UI mockups. Team agreed on the tab-based navigation
+        but pushed back on removing the search bar from the home screen.
+      - Budget approved for two additional senior engineers to accelerate the migration.
+      
+      Action Items: Engineering to provide revised timeline by Friday. Design to iterate
+      on search bar placement. HR to post job listings by end of week.
+    expected_output: |
+      The Q3 planning meeting covered the microservices migration (60% complete, with order service blocked by legacy database issues), a recommendation engine launch targeted for September 15th but facing a 6-week engineering gap, and new mobile UI designs. Key decisions included approving budget for two senior engineer hires and agreeing on tab-based navigation while retaining the search bar on the home screen.
+    difficulty: medium
+
+  - id: sum_004
+    description: Summarize a product description
+    prompt: |
+      Summarize the following text in 2-3 sentences:
+
+      The AeroFlow Pro 3000 is a next-generation portable air purifier designed for spaces
+      up to 500 square feet. It features a three-stage filtration system combining a washable
+      pre-filter, a medical-grade HEPA H13 filter capturing 99.97% of particles down to
+      0.3 microns, and an activated carbon layer for odor elimination. The device operates
+      at whisper-quiet levels of 22 dB on its lowest setting, includes smart sensors that
+      automatically adjust fan speed based on real-time air quality readings, and connects
+      via WiFi to a companion app for remote monitoring and filter replacement alerts. With
+      a 12-month filter lifespan and energy consumption of just 8 watts on low, it offers
+      one of the lowest operating costs in its category. Available in arctic white and
+      matte charcoal, priced at $249.99 with a 3-year warranty.
+    expected_output: |
+      The AeroFlow Pro 3000 is a portable air purifier for spaces up to 500 sq ft, featuring three-stage HEPA H13 filtration that captures 99.97% of particles, with smart sensors for automatic fan adjustment and WiFi connectivity for remote monitoring. Operating at just 22 dB and 8 watts on low with 12-month filter life, it offers low operating costs at $249.99 with a 3-year warranty.
+    difficulty: easy
+
+  - id: sum_005
+    description: Summarize a legal clause
+    prompt: |
+      Summarize the following text in 2-3 sentences:
+
+      Limitation of Liability. In no event shall either party be liable to the other party
+      for any indirect, incidental, special, consequential, or punitive damages, including
+      but not limited to loss of profits, data, business opportunities, or goodwill, arising
+      out of or related to this Agreement, regardless of whether such damages were foreseeable
+      and whether or not a party has been advised of the possibility of such damages. Each
+      party's total cumulative liability under this Agreement shall not exceed the total
+      amounts paid or payable by the Client to the Service Provider during the twelve (12)
+      month period immediately preceding the event giving rise to such liability. The
+      foregoing limitations shall not apply to breaches of confidentiality obligations,
+      intellectual property infringement claims, or either party's indemnification obligations
+      set forth in Section 8.
+    expected_output: |
+      This liability clause prevents either party from claiming indirect, consequential, or punitive damages from the other, and caps total liability at 12 months of fees paid by the Client. However, these limitations do not apply to confidentiality breaches, intellectual property infringement, or indemnification obligations under Section 8.
+    difficulty: hard

@@ -1,0 +1,19 @@
+# Configurable weights for gap analysis (Phase 4)
+# Weights per field - must sum to 1.0
+field_weights:
+  code_generation: 0.15
+  summarization: 0.10
+  rag_qa: 0.15
+  classification: 0.10
+  reasoning: 0.15
+  creative_writing: 0.05
+  regression: 0.05
+  adversarial: 0.10
+  pii: 0.10
+  bias: 0.05
+
+# Tradeoff weights within each field
+metric_weights:
+  accuracy: 0.6
+  latency: 0.2
+  ram_efficiency: 0.2

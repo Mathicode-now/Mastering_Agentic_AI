@@ -1,0 +1,27 @@
+defaults:
+  generation_timeout_seconds: 120
+  retry_count: 3
+  retry_backoff_base: 2
+
+per_field:
+  code_generation:
+    generation_timeout_seconds: 180
+    sandbox_timeout_seconds: 30
+  summarization:
+    generation_timeout_seconds: 150
+  rag_qa:
+    generation_timeout_seconds: 120
+  reasoning:
+    generation_timeout_seconds: 180
+  classification:
+    generation_timeout_seconds: 60
+  regression:
+    generation_timeout_seconds: 60
+  adversarial:
+    generation_timeout_seconds: 90
+  pii:
+    generation_timeout_seconds: 60
+  creative_writing:
+    generation_timeout_seconds: 180
+  bias:
+    generation_timeout_seconds: 90

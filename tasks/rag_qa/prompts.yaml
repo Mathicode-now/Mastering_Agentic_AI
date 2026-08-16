@@ -1,0 +1,82 @@
+field: rag_qa
+scoring: rag
+tasks:
+  - id: rag_001
+    description: Answer a question about photosynthesis from a biology passage
+    prompt: |
+      Given the following context, answer the question.
+
+      Context: Photosynthesis occurs in two main stages: the light-dependent reactions and the Calvin cycle. The light-dependent reactions take place in the thylakoid membranes of chloroplasts, where chlorophyll absorbs sunlight and converts it into chemical energy in the form of ATP and NADPH. Water molecules are split during this process, releasing oxygen as a byproduct. The Calvin cycle occurs in the stroma of the chloroplast and uses the ATP and NADPH produced in the light reactions to fix carbon dioxide into glucose through a series of enzyme-catalyzed reactions. The key enzyme in this process is RuBisCO, which catalyzes the first step of carbon fixation.
+
+      Question: Where do the light-dependent reactions of photosynthesis occur, and what are their main products?
+
+      Answer:
+    context: |
+      Photosynthesis occurs in two main stages: the light-dependent reactions and the Calvin cycle. The light-dependent reactions take place in the thylakoid membranes of chloroplasts, where chlorophyll absorbs sunlight and converts it into chemical energy in the form of ATP and NADPH. Water molecules are split during this process, releasing oxygen as a byproduct. The Calvin cycle occurs in the stroma of the chloroplast and uses the ATP and NADPH produced in the light reactions to fix carbon dioxide into glucose through a series of enzyme-catalyzed reactions. The key enzyme in this process is RuBisCO, which catalyzes the first step of carbon fixation.
+    expected_output: |
+      The light-dependent reactions occur in the thylakoid membranes of chloroplasts. Their main products are ATP and NADPH (chemical energy), with oxygen released as a byproduct from the splitting of water molecules.
+    difficulty: easy
+
+  - id: rag_002
+    description: Answer a question about the Treaty of Westphalia from a history passage
+    prompt: |
+      Given the following context, answer the question.
+
+      Context: The Peace of Westphalia, signed in 1648, ended the Thirty Years' War in the Holy Roman Empire and the Eighty Years' War between Spain and the Dutch Republic. The treaties established the principle of state sovereignty, meaning that each state had exclusive authority over its territory without interference from external powers. This fundamentally changed the European political order by weakening the authority of the Holy Roman Emperor and the Pope in secular matters. The peace recognized the independence of the Dutch Republic and the Swiss Confederation, and allowed German princes to determine the religion of their own states. Historians consider Westphalia the foundation of the modern international system of sovereign nation-states.
+
+      Question: What principle did the Peace of Westphalia establish, and how did it change the European political order?
+
+      Answer:
+    context: |
+      The Peace of Westphalia, signed in 1648, ended the Thirty Years' War in the Holy Roman Empire and the Eighty Years' War between Spain and the Dutch Republic. The treaties established the principle of state sovereignty, meaning that each state had exclusive authority over its territory without interference from external powers. This fundamentally changed the European political order by weakening the authority of the Holy Roman Emperor and the Pope in secular matters. The peace recognized the independence of the Dutch Republic and the Swiss Confederation, and allowed German princes to determine the religion of their own states. Historians consider Westphalia the foundation of the modern international system of sovereign nation-states.
+    expected_output: |
+      The Peace of Westphalia established the principle of state sovereignty, which grants each state exclusive authority over its territory without external interference. It changed the European political order by weakening the authority of the Holy Roman Emperor and the Pope in secular matters, and is considered the foundation of the modern international system of sovereign nation-states.
+    difficulty: medium
+
+  - id: rag_003
+    description: Answer a question about TCP congestion control from a networking passage
+    prompt: |
+      Given the following context, answer the question.
+
+      Context: TCP congestion control uses several algorithms to prevent network overload. The slow start phase begins with a small congestion window (cwnd) of typically one or two segments, doubling it with each round-trip time (RTT) until it reaches the slow start threshold (ssthresh). After reaching ssthresh, TCP enters the congestion avoidance phase, where cwnd increases linearly by one segment per RTT. When packet loss is detected via three duplicate ACKs, TCP performs fast retransmit and enters fast recovery, halving the congestion window. If a timeout occurs instead, TCP assumes severe congestion and resets cwnd to one segment, restarting slow start with ssthresh set to half the previous cwnd.
+
+      Question: What happens when TCP detects packet loss through a timeout versus three duplicate ACKs?
+
+      Answer:
+    context: |
+      TCP congestion control uses several algorithms to prevent network overload. The slow start phase begins with a small congestion window (cwnd) of typically one or two segments, doubling it with each round-trip time (RTT) until it reaches the slow start threshold (ssthresh). After reaching ssthresh, TCP enters the congestion avoidance phase, where cwnd increases linearly by one segment per RTT. When packet loss is detected via three duplicate ACKs, TCP performs fast retransmit and enters fast recovery, halving the congestion window. If a timeout occurs instead, TCP assumes severe congestion and resets cwnd to one segment, restarting slow start with ssthresh set to half the previous cwnd.
+    expected_output: |
+      When packet loss is detected via three duplicate ACKs, TCP performs fast retransmit and enters fast recovery, halving the congestion window. When a timeout occurs, TCP assumes severe congestion and takes more drastic action: it resets the congestion window to one segment and restarts slow start, with ssthresh set to half the previous congestion window.
+    difficulty: medium
+
+  - id: rag_004
+    description: Answer a question about CRISPR from a genetics passage
+    prompt: |
+      Given the following context, answer the question.
+
+      Context: CRISPR-Cas9 gene editing works by using a guide RNA (gRNA) that is complementary to a target DNA sequence. The gRNA directs the Cas9 enzyme to the specific location in the genome where it creates a double-strand break. The cell then repairs this break through one of two mechanisms: non-homologous end joining (NHEJ), which often introduces insertions or deletions that disrupt the gene, or homology-directed repair (HDR), which can insert a new sequence if a DNA template is provided. NHEJ is more efficient but error-prone, making it suitable for gene knockout experiments. HDR is less efficient but allows precise insertions, making it ideal for correcting disease-causing mutations or inserting new genes at specific loci.
+
+      Question: What are the two DNA repair mechanisms triggered by CRISPR-Cas9, and when is each one preferred?
+
+      Answer:
+    context: |
+      CRISPR-Cas9 gene editing works by using a guide RNA (gRNA) that is complementary to a target DNA sequence. The gRNA directs the Cas9 enzyme to the specific location in the genome where it creates a double-strand break. The cell then repairs this break through one of two mechanisms: non-homologous end joining (NHEJ), which often introduces insertions or deletions that disrupt the gene, or homology-directed repair (HDR), which can insert a new sequence if a DNA template is provided. NHEJ is more efficient but error-prone, making it suitable for gene knockout experiments. HDR is less efficient but allows precise insertions, making it ideal for correcting disease-causing mutations or inserting new genes at specific loci.
+    expected_output: |
+      The two repair mechanisms are non-homologous end joining (NHEJ) and homology-directed repair (HDR). NHEJ is preferred for gene knockout experiments because it is more efficient, though error-prone, introducing insertions or deletions that disrupt genes. HDR is preferred for precise corrections of disease-causing mutations or inserting new genes, as it allows exact sequence insertion using a DNA template, though it is less efficient.
+    difficulty: hard
+
+  - id: rag_005
+    description: Answer a question about monetary policy from an economics passage
+    prompt: |
+      Given the following context, answer the question.
+
+      Context: Central banks use several tools to implement monetary policy. The primary tool is setting the benchmark interest rate, which influences borrowing costs throughout the economy. When inflation rises above target, central banks typically raise interest rates to cool economic activity and reduce price pressures. Conversely, during recessions they lower rates to stimulate borrowing and spending. Quantitative easing (QE) is an unconventional tool used when rates are near zero, involving large-scale purchases of government bonds and other securities to inject liquidity into the financial system. QE aims to lower long-term interest rates and encourage lending, but critics argue it can inflate asset prices and increase wealth inequality without significantly boosting real economic output.
+
+      Question: What is quantitative easing, when is it used, and what are its criticisms?
+
+      Answer:
+    context: |
+      Central banks use several tools to implement monetary policy. The primary tool is setting the benchmark interest rate, which influences borrowing costs throughout the economy. When inflation rises above target, central banks typically raise interest rates to cool economic activity and reduce price pressures. Conversely, during recessions they lower rates to stimulate borrowing and spending. Quantitative easing (QE) is an unconventional tool used when rates are near zero, involving large-scale purchases of government bonds and other securities to inject liquidity into the financial system. QE aims to lower long-term interest rates and encourage lending, but critics argue it can inflate asset prices and increase wealth inequality without significantly boosting real economic output.
+    expected_output: |
+      Quantitative easing (QE) is an unconventional monetary policy tool involving large-scale purchases of government bonds and other securities to inject liquidity into the financial system. It is used when interest rates are near zero and conventional rate cuts are no longer effective. Critics argue that QE can inflate asset prices and increase wealth inequality without significantly boosting real economic output.
+    difficulty: medium

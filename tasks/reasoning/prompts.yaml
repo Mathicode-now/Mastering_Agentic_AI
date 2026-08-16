@@ -1,0 +1,73 @@
+field: reasoning
+scoring: contains
+tasks:
+  - id: rea_001
+    description: Multi-step arithmetic word problem
+    prompt: |
+      A bookstore sells paperbacks for $8 each and hardcovers for $15 each.
+      On Monday, they sold 12 paperbacks and 7 hardcovers.
+      On Tuesday, they sold 15 paperbacks and 4 hardcovers.
+      On Wednesday, they sold 9 paperbacks and 11 hardcovers.
+      What was the total revenue for all three days combined?
+      Show your reasoning step by step, then provide the final numerical answer.
+    expected_output: "558"
+    reasoning_type: arithmetic
+
+  - id: rea_002
+    description: Logic puzzle with constraints
+    prompt: |
+      Five people (Alice, Bob, Carol, Dave, Eve) are sitting in a row of five chairs numbered 1-5 from left to right.
+      - Alice is not in chair 1 or chair 5.
+      - Bob is somewhere to the left of Carol.
+      - Dave is in chair 4.
+      - Eve is not adjacent to Dave.
+      - Alice is adjacent to Bob.
+
+      What chair number is Alice sitting in?
+      Reason through the constraints step by step, then state Alice's chair number.
+    expected_output: "3"
+    reasoning_type: logic
+
+  - id: rea_003
+    description: Syllogism with negation
+    prompt: |
+      Consider the following statements:
+      1. All engineers at company X know Python.
+      2. No one who knows Python is unfamiliar with data structures.
+      3. Maria is an engineer at company X.
+      4. Tom is unfamiliar with data structures.
+
+      Based solely on these statements, determine: Is Tom an engineer at company X?
+      Explain your reasoning step by step, then answer with "Yes" or "No".
+    expected_output: "No"
+    reasoning_type: deduction
+
+  - id: rea_004
+    description: Number sequence pattern recognition
+    prompt: |
+      Find the next number in this sequence:
+
+      2, 6, 14, 30, 62, ?
+
+      Each term follows a specific mathematical pattern. Identify the pattern,
+      explain your reasoning, and provide the next number.
+    expected_output: "126"
+    reasoning_type: pattern
+
+  - id: rea_005
+    description: Multi-step deduction with elimination
+    prompt: |
+      A detective is investigating a case with four suspects: Green, White, Plum, and Scarlet.
+      The crime occurred between 8 PM and 10 PM.
+
+      Known facts:
+      - Green was at a restaurant from 7 PM to 9:30 PM (verified by receipt and waiter testimony).
+      - White was on a video call from 8:30 PM to 10:30 PM (verified by call logs).
+      - Plum's alibi is that he was home alone watching TV — no witnesses or verification.
+      - Scarlet was at the gym from 6 PM to 8:15 PM (verified by entry/exit logs), then drove home (30-minute drive verified by traffic cameras arriving home at 8:45 PM).
+      - The crime required the perpetrator to be physically present at the crime scene for the entire duration (8 PM to 10 PM).
+
+      Which suspect(s) cannot be eliminated based on the verified evidence?
+      Reason through each suspect's alibi, then state who remains a suspect.
+    expected_output: "Plum"
+    reasoning_type: deduction

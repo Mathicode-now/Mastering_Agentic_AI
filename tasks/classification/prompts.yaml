@@ -1,0 +1,62 @@
+field: classification
+scoring: exact_match
+tasks:
+  - id: cls_001
+    description: Classify clearly positive product review
+    prompt: |
+      Classify the following text into exactly one of: [positive, negative, neutral]
+      Respond with only the classification label, nothing else.
+
+      Text: "This is hands down the best purchase I've made all year. The build quality is exceptional, it exceeded every expectation I had, and the customer service team was incredibly helpful when I had a setup question."
+
+      Classification:
+    expected_output: "positive"
+    categories: [positive, negative, neutral]
+
+  - id: cls_002
+    description: Classify clearly negative service experience
+    prompt: |
+      Classify the following text into exactly one of: [positive, negative, neutral]
+      Respond with only the classification label, nothing else.
+
+      Text: "Absolutely terrible experience. The product arrived broken, customer support kept me on hold for 45 minutes, and when I finally got through they refused to issue a refund. I will never buy from this company again."
+
+      Classification:
+    expected_output: "negative"
+    categories: [positive, negative, neutral]
+
+  - id: cls_003
+    description: Classify neutral factual statement about a product
+    prompt: |
+      Classify the following text into exactly one of: [positive, negative, neutral]
+      Respond with only the classification label, nothing else.
+
+      Text: "The laptop weighs 3.2 pounds and has a 14-inch display. It comes with 16GB of RAM and a 512GB SSD. The battery is rated for 10 hours of use. It ships in a standard brown box with a power adapter included."
+
+      Classification:
+    expected_output: "neutral"
+    categories: [positive, negative, neutral]
+
+  - id: cls_004
+    description: Classify negative review with sarcastic positive language
+    prompt: |
+      Classify the following text into exactly one of: [positive, negative, neutral]
+      Respond with only the classification label, nothing else.
+
+      Text: "Oh wonderful, another software update that broke everything that was working perfectly fine before. Really love spending my entire Saturday trying to fix things that weren't broken. The developers must be so proud of themselves."
+
+      Classification:
+    expected_output: "negative"
+    categories: [positive, negative, neutral]
+
+  - id: cls_005
+    description: Classify positive review with minor criticism
+    prompt: |
+      Classify the following text into exactly one of: [positive, negative, neutral]
+      Respond with only the classification label, nothing else.
+
+      Text: "I really enjoy using this application daily. The interface is intuitive, syncing works flawlessly across my devices, and the new features they added last month are genuinely useful. The only minor gripe is that the dark mode could be a bit darker, but overall I'm very satisfied and have recommended it to several colleagues."
+
+      Classification:
+    expected_output: "positive"
+    categories: [positive, negative, neutral]

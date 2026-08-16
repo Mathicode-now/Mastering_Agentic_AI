@@ -1,0 +1,113 @@
+field: creative_writing
+scoring: bert_score
+tasks:
+  - id: cw_001
+    description: Write a short story opening set in a space station
+    prompt: |
+      Write the opening paragraph (4-6 sentences) of a short story set on an abandoned space station. 
+      The protagonist has just arrived and notices something unexpected. 
+      Use vivid sensory details and create a sense of mystery.
+    expected_output: |
+      The airlock hissed open to reveal a corridor bathed in soft amber light — impossible, given that Station Kepler-7 had been dark for three years. Commander Elara Chen steadied herself against the threshold, her boots finding purchase on a floor that should have been coated in frost but instead felt warm through her suit's sensors. The air recyclers hummed with a rhythm she didn't recognize, something slower and more deliberate than standard life support. On the wall opposite, someone had written in neat block letters with what appeared to be engine grease: "WE DIDN'T LEAVE. WE WENT DEEPER." Her radio crackled with static that almost sounded like breathing, and somewhere far below, through layers of titanium and composite, she felt the station vibrate as if it had a pulse.
+    criteria:
+      - vivid sensory details (sight, sound, touch)
+      - clear sense of mystery or tension
+      - established setting and character
+      - engaging hook that makes reader want to continue
+      - show rather than tell
+    difficulty: medium
+
+  - id: cw_002
+    description: Write a poem about the passage of time
+    prompt: |
+      Write a short poem (8-12 lines) about the passage of time, using the metaphor of a river.
+      Include at least one example of alliteration and one of imagery that appeals to sound.
+    expected_output: |
+      The river remembers what we forget—
+      each stone it smooths once stood as a mountain,
+      each bend it carves was once a straight path
+      stretching certain toward the horizon.
+
+      Listen: the water whispers of winters past,
+      of summers that shimmered and slipped downstream,
+      carrying leaves like letters never sent.
+
+      We stand on the bank and call it stillness,
+      but beneath our feet the earth is moving,
+      grain by grain, toward the waiting sea,
+      where all our rushing rivers run to rest.
+    criteria:
+      - effective use of river as time metaphor
+      - alliteration present
+      - sound imagery included
+      - emotional resonance
+      - poetic rhythm and line breaks
+    difficulty: medium
+
+  - id: cw_003
+    description: Write a dialogue between two characters with conflicting goals
+    prompt: |
+      Write a short dialogue (8-12 exchanges) between a museum security guard who has found
+      someone after hours, and the person who claims to be a restorer sent to fix a painting.
+      Neither character is sure the other is telling the truth. Show tension through subtext
+      rather than explicit statements.
+    expected_output: |
+      "The museum closed three hours ago." The guard's flashlight found the figure crouched before the Vermeer, a small case open beside them.
+
+      "Yes, I know. That's rather the point — the UV lamps interfere with my assessment during business hours." The woman didn't look up from the painting's surface.
+
+      "I don't have any work order for tonight."
+
+      "It was arranged through Director Hoffman directly. You can call her if you like." A pause. "Though I imagine she's asleep by now."
+
+      The guard noted the woman's gloves — nitrile, not cotton. Restorers used cotton. "What department did you say you were with?"
+
+      "I didn't." She finally looked up, smiling. "Conservation and Provenance. We handle the sensitive cases."
+
+      "I've worked here eleven years. Never heard of a combined department."
+
+      "It's new. Formed after the Leiden incident." She held his gaze. "You did hear about the Leiden incident?"
+
+      He hadn't. He shifted his weight. "I'm going to need to see your ID badge."
+
+      "Of course." She reached slowly into her jacket. "It's right here, along with Director Hoffman's personal authorization. Would you mind holding the light steady?"
+
+      The flashlight beam trembled slightly as he aimed it at her hand, now emerging from her pocket holding something that was decidedly not an ID badge.
+    criteria:
+      - distinct character voices
+      - tension conveyed through subtext
+      - natural dialogue rhythm
+      - reveals character through speech patterns
+      - builds suspense progressively
+    difficulty: hard
+
+  - id: cw_004
+    description: Write a descriptive passage of a marketplace
+    prompt: |
+      Write a descriptive paragraph (5-7 sentences) about a busy morning marketplace.
+      Engage at least four of the five senses. Make the reader feel present in the scene.
+    expected_output: |
+      The morning market erupted into life at dawn, a symphony of vendors calling prices over one another in a musical competition no one could win. Pyramids of saffron and turmeric glowed like captured sunlight on wooden tables, their powdery perfume mixing with the sharp brine of fresh fish laid on beds of crushed ice. Underfoot, cobblestones slick with melon juice caught the sandals of hurrying shoppers who navigated by instinct through the maze of canvas-roofed stalls. A woman pressed a sample of goat cheese into my palm — crumbly, tangy, still cool from the cellar — while behind her, rounds of bread emerged from a clay oven so hot the air above it rippled like water. Everywhere hands moved: weighing, wrapping, exchanging coins worn smooth by ten thousand identical mornings, each one as urgent and alive as this.
+    criteria:
+      - engages at least four senses
+      - specific and concrete details
+      - creates sense of place and atmosphere
+      - dynamic and active language
+      - makes reader feel present
+    difficulty: easy
+
+  - id: cw_005
+    description: Write a persuasive paragraph about public libraries
+    prompt: |
+      Write a persuasive paragraph (5-7 sentences) arguing that public libraries remain essential
+      in the digital age. Use at least one concrete example or statistic (may be illustrative),
+      one rhetorical question, and appeal to both logic and emotion.
+    expected_output: |
+      In an age when information seems infinitely available through a screen, the public library stands as something technology cannot replicate: a democratic space where knowledge requires no subscription, no password, and no algorithm deciding what you deserve to see. Consider that nearly 30% of households in lower-income communities lack reliable internet access — for these families, the library isn't a quaint alternative but a lifeline to job applications, educational resources, and the digital literacy training that modern employment demands. Who else provides a free, heated room where a homeless veteran can read the newspaper with dignity, where a teenager can access college prep materials their parents cannot afford, where an elderly person can learn to video-call their grandchildren? Libraries adapt precisely because they serve people, not markets: they now offer 3D printers, recording studios, seed banks, and citizenship classes alongside their books. To defund them in the name of digital progress is to confuse access to information with equity of access — a distinction that determines whether democracy's promise remains available to all or only to those who can afford the monthly subscription. The library card remains the most radical technology we have: it says that curiosity alone is qualification enough.
+    criteria:
+      - clear persuasive thesis
+      - concrete example or statistic
+      - rhetorical question used effectively
+      - appeals to both logic and emotion
+      - compelling and well-structured argument
+    difficulty: medium

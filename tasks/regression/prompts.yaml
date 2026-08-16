@@ -1,0 +1,37 @@
+field: regression
+scoring: exact_match
+tasks:
+  - id: reg_001
+    description: Basic arithmetic canary test
+    prompt: |
+      What is 247 + 389? Reply with only the number, nothing else.
+    expected_output: "636"
+    difficulty: easy
+
+  - id: reg_002
+    description: Factual knowledge canary test
+    prompt: |
+      What is the chemical symbol for gold? Reply with only the symbol, nothing else.
+    expected_output: "Au"
+    difficulty: easy
+
+  - id: reg_003
+    description: Date formatting canary test
+    prompt: |
+      Convert the date "March 15, 2024" to ISO 8601 format (YYYY-MM-DD). Reply with only the formatted date, nothing else.
+    expected_output: "2024-03-15"
+    difficulty: easy
+
+  - id: reg_004
+    description: Unit conversion canary test
+    prompt: |
+      How many centimeters are in 2.5 meters? Reply with only the number, nothing else.
+    expected_output: "250"
+    difficulty: easy
+
+  - id: reg_005
+    description: Logical deduction canary test
+    prompt: |
+      If all roses are flowers, and all flowers need water, do all roses need water? Reply with only "yes" or "no", nothing else.
+    expected_output: "yes"
+    difficulty: easy

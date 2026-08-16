@@ -1,0 +1,107 @@
+field: code_generation
+scoring: code_execution
+tasks:
+  - id: cg_001
+    description: Implement a recursive fibonacci function
+    prompt: |
+      Write a Python function called `fibonacci(n)` that returns the nth Fibonacci number.
+      The sequence starts with fibonacci(0) = 0, fibonacci(1) = 1.
+      The function must handle n >= 0 and use recursion with memoization for efficiency.
+      Return only the function definition, no test code.
+    expected_output: |
+      def fibonacci(n, memo={}):
+          if n in memo:
+              return memo[n]
+          if n <= 0:
+              return 0
+          if n == 1:
+              return 1
+          memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+          return memo[n]
+    language: python
+    difficulty: easy
+
+  - id: cg_002
+    description: Implement fizzbuzz for a range
+    prompt: |
+      Write a Python function called `fizzbuzz(n)` that returns a list of strings for numbers 1 through n (inclusive).
+      For multiples of 3, use "Fizz". For multiples of 5, use "Buzz".
+      For multiples of both 3 and 5, use "FizzBuzz". Otherwise, use the string representation of the number.
+      Return only the function definition, no test code.
+    expected_output: |
+      def fizzbuzz(n):
+          result = []
+          for i in range(1, n + 1):
+              if i % 15 == 0:
+                  result.append("FizzBuzz")
+              elif i % 3 == 0:
+                  result.append("Fizz")
+              elif i % 5 == 0:
+                  result.append("Buzz")
+              else:
+                  result.append(str(i))
+          return result
+    language: python
+    difficulty: easy
+
+  - id: cg_003
+    description: Reverse a string without using built-in reverse methods
+    prompt: |
+      Write a Python function called `reverse_string(s)` that reverses a string without using
+      slicing ([::-1]), the reversed() built-in, or any library functions.
+      Use an iterative approach building the reversed string character by character.
+      Handle empty strings and single characters correctly.
+      Return only the function definition, no test code.
+    expected_output: |
+      def reverse_string(s):
+          result = ""
+          for i in range(len(s) - 1, -1, -1):
+              result += s[i]
+          return result
+    language: python
+    difficulty: medium
+
+  - id: cg_004
+    description: Implement binary search on a sorted list
+    prompt: |
+      Write a Python function called `binary_search(arr, target)` that performs binary search
+      on a sorted list of integers. Return the index of the target if found, or -1 if not found.
+      The function must use an iterative approach (not recursive).
+      Handle edge cases: empty list, single element list, target smaller/larger than all elements.
+      Return only the function definition, no test code.
+    expected_output: |
+      def binary_search(arr, target):
+          left = 0
+          right = len(arr) - 1
+          while left <= right:
+              mid = (left + right) // 2
+              if arr[mid] == target:
+                  return mid
+              elif arr[mid] < target:
+                  left = mid + 1
+              else:
+                  right = mid - 1
+          return -1
+    language: python
+    difficulty: medium
+
+  - id: cg_005
+    description: Flatten an arbitrarily nested list
+    prompt: |
+      Write a Python function called `flatten(lst)` that takes an arbitrarily nested list
+      and returns a single flat list containing all non-list elements in order.
+      For example: flatten([1, [2, [3, 4], 5], [6, 7]]) should return [1, 2, 3, 4, 5, 6, 7].
+      The function must handle any depth of nesting, empty sublists, and mixed types
+      (integers, strings, floats) but you can assume elements are either lists or non-list values.
+      Use recursion. Return only the function definition, no test code.
+    expected_output: |
+      def flatten(lst):
+          result = []
+          for item in lst:
+              if isinstance(item, list):
+                  result.extend(flatten(item))
+              else:
+                  result.append(item)
+          return result
+    language: python
+    difficulty: hard

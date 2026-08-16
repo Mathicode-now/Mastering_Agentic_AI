@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "model-eval-framework"
+version = "0.1.0"
+description = "Local LLM evaluation framework for comparing small models across diverse tasks"
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "pytest-cov>=5.0",
+]
+dashboard = [
+    "streamlit>=1.36",
+    "plotly>=5.22",
+    "pandas>=2.2",
+]
+scoring = [
+    "rouge-score>=0.1.2",
+    "bert-score>=0.3.13",
+    "ragas>=0.1.10",
+    "numpy>=1.26",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "milestone: Phase milestone verification tests",
+]
